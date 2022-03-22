@@ -21,9 +21,9 @@
             android:id="@+id/img_avatar"
             android:layout_width="96dp"
             android:layout_height="95dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/image_content_desc"
             card_view:layout_constraintBottom_toBottomOf="parent"
@@ -31,24 +31,27 @@
             card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="0.0"
             tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="16sp"
             android:textStyle="bold"
             card_view:layout_constraintEnd_toStartOf="@+id/vg_text_right"
             card_view:layout_constraintStart_toStartOf="@+id/vg_text_left"
-            card_view:layout_constraintTop_toTopOf="@+id/hg_text_bottom"
+            card_view:layout_constraintTop_toTopOf="@+id/hg_text_top"
             tools:text="Full Name" />
 
         <TextView
             android:id="@+id/tv_username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
             android:textColor="#706363"
             android:textSize="11sp"
@@ -63,7 +66,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#000000"
             android:textSize="11sp"
             card_view:layout_constraintEnd_toStartOf="@+id/vg_text_right"
             card_view:layout_constraintHorizontal_bias="0.0"
@@ -75,27 +79,28 @@
             android:id="@+id/tv_company"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#000000"
             android:textSize="11sp"
-            card_view:layout_constraintBottom_toTopOf="@+id/tv_repositories"
             card_view:layout_constraintEnd_toStartOf="@+id/vg_text_right"
             card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="@+id/vg_text_left"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_location"
-            card_view:layout_constraintVertical_bias="0.0"
             tools:text="Company" />
 
         <TextView
             android:id="@+id/tv_repositories"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-light"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#000000"
             android:textSize="11sp"
-            card_view:layout_constraintBottom_toTopOf="@+id/tv_following"
             card_view:layout_constraintEnd_toStartOf="@+id/vg_text_right"
             card_view:layout_constraintHorizontal_bias="1.0"
             card_view:layout_constraintStart_toStartOf="@+id/vg_text_left"
+            card_view:layout_constraintTop_toBottomOf="@+id/tv_company"
             tools:text="Repositories" />
 
         <TextView
@@ -105,9 +110,9 @@
             android:fontFamily="sans-serif-light"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textSize="11sp"
-            card_view:layout_constraintBottom_toTopOf="@+id/hg_text_top"
             card_view:layout_constraintEnd_toStartOf="@+id/tv_followers"
             card_view:layout_constraintStart_toStartOf="@+id/vg_text_left"
+            card_view:layout_constraintTop_toBottomOf="@+id/tv_repositories"
             tools:text="Following" />
 
         <TextView
@@ -117,9 +122,9 @@
             android:fontFamily="sans-serif-light"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textSize="11sp"
-            card_view:layout_constraintBottom_toTopOf="@+id/hg_text_top"
             card_view:layout_constraintEnd_toStartOf="@+id/vg_text_right"
             card_view:layout_constraintStart_toEndOf="@+id/tv_following"
+            card_view:layout_constraintTop_toBottomOf="@+id/tv_repositories"
             tools:text="Followers" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -128,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="126dp"
             android:orientation="vertical"
-            card_view:layout_constraintGuide_end="262dp"
+            card_view:layout_constraintGuide_end="269dp"
             card_view:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -144,19 +149,19 @@
             android:id="@+id/hg_text_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintGuide_begin="111dp" />
+            card_view:layout_constraintGuide_begin="0dp"
+            card_view:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/hg_text_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
-            card_view:layout_constraintGuide_begin="0dp"
-            card_view:layout_constraintTop_toTopOf="parent" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintGuide_begin="119dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

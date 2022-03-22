@@ -12,5 +12,5 @@ data class User (
     var repositories: String,
     var following: String,
     var followers: String,
-    var avatar: String,
+    var avatar: Int,
 ) : Parcelable

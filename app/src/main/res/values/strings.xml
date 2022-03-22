@@ -94,7 +94,7 @@
         <item>10</item>
     </string-array>
 
-    <string-array name="avatar">
+    <array name="avatar">
         <item>@drawable/user1</item>
         <item>@drawable/user2</item>
         <item>@drawable/user3</item>
@@ -105,5 +105,5 @@
         <item>@drawable/user8</item>
         <item>@drawable/user9</item>
         <item>@drawable/user10</item>
-    </string-array>
+    </array>
 </resources>

@@ -10,6 +10,7 @@ import com.dicoding.latihan.githubuser.models.User
 class UserListAdapter(
     private val userList: ArrayList<User>
 ) : RecyclerView.Adapter<UserListAdapter.UserListHolder>()  {
+    private lateinit var onItemClickCallback: OnItemClickCallback
 
     /**
      * RecyclerView adapter binding code reference is taken from:
@@ -19,7 +20,12 @@ class UserListAdapter(
         private val itemBinding: ItemUserBinding
     ): RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(user: User) {
-            itemBinding.tvUsername.text = user.username
+            Glide
+                .with(this.itemView.context)
+                .load(user.avatar)
+                .circleCrop()
+                .into(itemBinding.imgAvatar)
+
             itemBinding.tvName.text = user.name
 
             /**
@@ -28,19 +34,16 @@ class UserListAdapter(
              * "Do not concatenate text displayed with setText.
              * Use resource string with placeholders."
              *
-             * Akhirnya convert assigment to assigment expression aja :D
+             * Akhirnya option + enter, lalu "convert assigment
+             * to assigment expression" aja :D
              */
+            "@${user.username}".also { itemBinding.tvUsername.text = it }
             "📍 ${user.location}".also { itemBinding.tvLocation.text = it }
             "💼 ${user.company}".also { itemBinding.tvCompany.text = it }
             "Repositories: ${user.repositories}".also { itemBinding.tvRepositories.text = it }
             "Following: ${user.following}".also { itemBinding.tvFollowing.text = it }
-            "Followers: ${user.followers}".also { itemBinding.tvFollowing.text = it }
-
-            Glide
-                .with(itemBinding.imgAvatar.context)
-                .load(user.avatar)
-                .circleCrop()
-                .into(itemBinding.imgAvatar)
+            "Followers: ${user.followers}".also { itemBinding.tvFollowers.text = it }
+            itemBinding.tvName.text = user.name
         }
     }
 
@@ -56,4 +59,12 @@ class UserListAdapter(
     }
 
     override fun getItemCount(): Int = userList.size
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: User)
+    }
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
 }
