@@ -35,7 +35,10 @@ class UserListAdapter(
             "Following: ${user.following}".also { itemBinding.tvFollowing.text = it }
             "Followers: ${user.followers}".also { itemBinding.tvFollowing.text = it }
 
-            itemBinding.imgAvatar.setImageResource(user.avatar)
+            Glide.with(holder.itemView.context)
+                 .load(photo)
+                 .circleCrop()
+                 .into(holder.imgPhoto)
         }
     }
 
