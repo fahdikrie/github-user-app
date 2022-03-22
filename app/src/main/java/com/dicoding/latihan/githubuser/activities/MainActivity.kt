@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
 
             /**
              * Having trouble getting the image to show,
-             * so I use this reference & modified the xml:
+             * so I use this reference & modified the avatar
+             * xml tag from string-array to array:
              *
              * https://stackoverflow.com/questions/19791845/
              * reference-drawable-from-string-array-in-android/19792009
@@ -65,6 +66,8 @@ class MainActivity : AppCompatActivity() {
                 )
                 listHero.add(hero)
             }
+
+            avatarRes.recycle()
             return listHero
         }
 
