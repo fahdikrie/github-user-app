@@ -1,7 +1,9 @@
-package com.dicoding.latihan.githubuser
+package com.dicoding.latihan.githubuser.activities
+
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.dicoding.latihan.githubuser.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
