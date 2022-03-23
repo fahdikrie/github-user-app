@@ -14,33 +14,34 @@ class UserListAdapter(
 
     /**
      * RecyclerView adapter binding code reference is taken from:
-     * https://stackoverflow.com/questions/60423596/how-to-use-viewbinding-in-a-recyclerview-adapter
+     * https://stackoverflow.com/questions/60423596/
+     * how-to-use-viewbinding-in-a-recyclerview-adapter
      */
     class UserListHolder(
-        private val itemBinding: ItemUserBinding
-    ): RecyclerView.ViewHolder(itemBinding.root) {
+        private val binding: ItemUserBinding
+    ): RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
             Glide
                 .with(this.itemView.context)
                 .load(user.avatar)
                 .circleCrop()
-                .into(itemBinding.imgAvatar)
+                .into(binding.imgAvatar)
 
-            itemBinding.tvName.text = user.name
+            binding.tvName.text = user.name
 
-            "@${user.username}".also { itemBinding.tvUsername.text = it }
-            "📍 ${user.location}".also { itemBinding.tvLocation.text = it }
-            "💼 ${user.company}".also { itemBinding.tvCompany.text = it }
-            "Repositories: ${user.repositories}".also { itemBinding.tvRepositories.text = it }
-            "Following: ${user.following}".also { itemBinding.tvFollowing.text = it }
-            "Followers: ${user.followers}".also { itemBinding.tvFollowers.text = it }
+            "@${user.username}".also { binding.tvUsername.text = it }
+            "📍 ${user.location}".also { binding.tvLocation.text = it }
+            "💼 ${user.company}".also { binding.tvCompany.text = it }
+            "Repositories: ${user.repositories}".also { binding.tvRepositories.text = it }
+            "Following: ${user.following}".also { binding.tvFollowing.text = it }
+            "Followers: ${user.followers}".also { binding.tvFollowers.text = it }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListHolder {
-        val itemBinding = ItemUserBinding.inflate(
+        val binding = ItemUserBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
-        return UserListHolder(itemBinding)
+        return UserListHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UserListHolder, position: Int) {
