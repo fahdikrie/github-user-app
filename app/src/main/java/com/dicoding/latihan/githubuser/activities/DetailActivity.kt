@@ -1,5 +1,6 @@
 package com.dicoding.latihan.githubuser.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +22,8 @@ class DetailActivity : AppCompatActivity() {
 
         val userData = intent.getParcelableExtra<User>(EXTRA_USER_DATA)!!
         bindUserData(binding, userData)
-        bindFollowButton(binding, userData.username)
+        bindFollowButton(binding, userData)
+        bindShareButton(binding, userData)
     }
 
     private fun bindUserData(binding: ActivityUserDetailBinding, user: User) {
@@ -51,13 +53,30 @@ class DetailActivity : AppCompatActivity() {
     }
 
 
-    private fun bindFollowButton(binding: ActivityUserDetailBinding, username: String) {
+    private fun bindFollowButton(binding: ActivityUserDetailBinding, user: User) {
         binding.btnDetailFollow.setOnClickListener {
             Toast.makeText(
                 this,
-                "You are now following $username!",
+                "You are now following ${user.username}!",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private fun bindShareButton(binding: ActivityUserDetailBinding, user: User) {
+        binding.btnDetailShare.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(
+                Intent.EXTRA_TEXT,
+                """
+                    See ${user.name}'s GitHub profile:
+    
+                    https://github.com/${user.username}
+                """.trimIndent()
+            )
+
+            startActivity(Intent.createChooser(intent,"Share To:"))
         }
     }
 }
