@@ -1,6 +1,7 @@
 package com.dicoding.latihan.githubuser.activities
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.dicoding.latihan.githubuser.databinding.ActivityUserDetailBinding
@@ -20,6 +21,7 @@ class DetailActivity : AppCompatActivity() {
 
         val userData = intent.getParcelableExtra<User>(EXTRA_USER_DATA)!!
         bindUserData(binding, userData)
+        bindFollowButton(binding, userData.username)
     }
 
     private fun bindUserData(binding: ActivityUserDetailBinding, user: User) {
@@ -46,5 +48,16 @@ class DetailActivity : AppCompatActivity() {
         "Repositories: ${user.repositories}".also { binding.tvDetailRepositories.text = it }
         "Following: ${user.following}".also { binding.tvDetailFollowing.text = it }
         "Followers: ${user.followers}".also { binding.tvDetailFollowers.text = it }
+    }
+
+
+    private fun bindFollowButton(binding: ActivityUserDetailBinding, username: String) {
+        binding.btnDetailFollow.setOnClickListener {
+            Toast.makeText(
+                this,
+                "You are now following $username!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
