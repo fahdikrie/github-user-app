@@ -43,7 +43,6 @@ class UserListAdapter(
             "Repositories: ${user.repositories}".also { itemBinding.tvRepositories.text = it }
             "Following: ${user.following}".also { itemBinding.tvFollowing.text = it }
             "Followers: ${user.followers}".also { itemBinding.tvFollowers.text = it }
-            itemBinding.tvName.text = user.name
         }
     }
 

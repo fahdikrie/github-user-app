@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         userList.addAll(userResList)
         showRecyclerList()
 
-        if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (applicationContext.resources.configuration.orientation ==
+            Configuration.ORIENTATION_LANDSCAPE) {
             binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
         } else {
             binding.rvUsers.layoutManager = LinearLayoutManager(this)
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             val followersRes = resources.getStringArray(R.array.followers)
 
             /**
-             * Having trouble getting the image to show,
+             * Had some trouble on getting the image to show,
              * so I use this reference & modified the avatar
              * xml tag from string-array to array:
              *
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
             val listHero = ArrayList<User>()
             for (i in usernameRes.indices) {
-                val hero = User(
+                listHero.add(User(
                     usernameRes[i],
                     nameRes[i],
                     locationRes[i],
@@ -63,8 +64,7 @@ class MainActivity : AppCompatActivity() {
                     followingRes[i],
                     followersRes[i],
                     avatarRes.getResourceId(i, 0),
-                )
-                listHero.add(hero)
+                ))
             }
 
             avatarRes.recycle()
