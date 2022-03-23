@@ -1,11 +1,9 @@
 package com.dicoding.latihan.githubuser.adapters
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dicoding.latihan.githubuser.activities.DetailActivity
 import com.dicoding.latihan.githubuser.databinding.ItemUserBinding
 import com.dicoding.latihan.githubuser.models.User
 
@@ -30,15 +28,6 @@ class UserListAdapter(
 
             itemBinding.tvName.text = user.name
 
-            /**
-             * Ini saya bingung harus gimana biar ga ada error:
-             *
-             * "Do not concatenate text displayed with setText.
-             * Use resource string with placeholders."
-             *
-             * Akhirnya option + enter, lalu "convert assigment
-             * to assigment expression" aja :D
-             */
             "@${user.username}".also { itemBinding.tvUsername.text = it }
             "📍 ${user.location}".also { itemBinding.tvLocation.text = it }
             "💼 ${user.company}".also { itemBinding.tvCompany.text = it }

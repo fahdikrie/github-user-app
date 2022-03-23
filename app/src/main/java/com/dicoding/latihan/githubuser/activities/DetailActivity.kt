@@ -41,15 +41,6 @@ class DetailActivity : AppCompatActivity() {
 
         binding.tvDetailName.text = user.name
 
-        /**
-         * Ini saya bingung harus gimana biar ga ada error:
-         *
-         * "Do not concatenate text displayed with setText.
-         * Use resource string with placeholders."
-         *
-         * Akhirnya option + enter, lalu "convert assigment
-         * to assigment expression" aja :D
-         */
         "@${user.username}".also { binding.tvDetailUsername.text = it }
         "📍 ${user.location}".also { binding.tvDetailLocation.text = it }
         "💼 ${user.company}".also { binding.tvDetailCompany.text = it }

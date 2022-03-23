@@ -55,16 +55,18 @@ class MainActivity : AppCompatActivity() {
 
             val listHero = ArrayList<User>()
             for (i in usernameRes.indices) {
-                listHero.add(User(
-                    usernameRes[i],
-                    nameRes[i],
-                    locationRes[i],
-                    companyRes[i],
-                    repositoryRes[i],
-                    followingRes[i],
-                    followersRes[i],
-                    avatarRes.getResourceId(i, 0),
-                ))
+                listHero.add(
+                    User(
+                        usernameRes[i],
+                        nameRes[i],
+                        locationRes[i],
+                        companyRes[i],
+                        repositoryRes[i],
+                        followingRes[i],
+                        followersRes[i],
+                        avatarRes.getResourceId(i, 0),
+                    )
+                )
             }
 
             avatarRes.recycle()
