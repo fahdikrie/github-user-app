@@ -117,6 +117,7 @@
 
     <Button
         android:id="@+id/btn_detail_follow"
+        style="@style/Theme.AppCompat.CustomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -128,6 +129,7 @@
 
     <Button
         android:id="@+id/btn_detail_share"
+        style="@style/Theme.AppCompat.CustomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

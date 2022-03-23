@@ -32,9 +32,6 @@ class UserListAdapter(
             "@${user.username}".also { binding.tvUsername.text = it }
             "📍 ${user.location}".also { binding.tvLocation.text = it }
             "💼 ${user.company}".also { binding.tvCompany.text = it }
-            "Repositories: ${user.repositories}".also { binding.tvRepositories.text = it }
-            "Following: ${user.following}".also { binding.tvFollowing.text = it }
-            "Followers: ${user.followers}".also { binding.tvFollowers.text = it }
         }
     }
 
