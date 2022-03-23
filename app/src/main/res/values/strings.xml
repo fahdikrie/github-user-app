@@ -4,6 +4,7 @@
     <string name="image_content_desc">Github User Profile Photo</string>
     <string name="follow">Follow</string>
     <string name="share">Share</string>
+    <string name="splash_screen_github_logo">Splash Screen Github Logo</string>
 
     <string-array name="username">
         <item>JakeWharton</item>

@@ -21,13 +21,13 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val userData = intent.getParcelableExtra<User>(EXTRA_USER_DATA)!!
-        initDetailHeader(userData)
+        setHeader(userData)
         bindUserData(binding, userData)
         bindFollowButton(binding, userData)
         bindShareButton(binding, userData)
     }
 
-    private fun initDetailHeader(user: User) {
+    private fun setHeader(user: User) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = user.name
     }
@@ -77,6 +77,11 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Reference code is taken from:
+     * https://devofandroid.blogspot.com/2018/03/
+     * add-back-button-to-action-bar-android.html
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
