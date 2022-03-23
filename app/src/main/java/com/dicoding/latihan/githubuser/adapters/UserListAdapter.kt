@@ -1,9 +1,11 @@
 package com.dicoding.latihan.githubuser.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dicoding.latihan.githubuser.activities.DetailActivity
 import com.dicoding.latihan.githubuser.databinding.ItemUserBinding
 import com.dicoding.latihan.githubuser.models.User
 
@@ -55,6 +57,9 @@ class UserListAdapter(
     override fun onBindViewHolder(holder: UserListHolder, position: Int) {
         val user: User = userList[position]
         holder.bind(user)
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(user)
+        }
     }
 
     override fun getItemCount(): Int = userList.size

@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         listHeroAdapter.setOnItemClickCallback(object : UserListAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
                 val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
-                intentToDetail.putExtra("DATA", data)
+                intentToDetail.putExtra(DetailActivity.EXTRA_USER_DATA, data)
                 startActivity(intentToDetail)
             }
         })
