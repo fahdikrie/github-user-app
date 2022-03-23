@@ -21,9 +21,15 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val userData = intent.getParcelableExtra<User>(EXTRA_USER_DATA)!!
+        initDetailHeader(userData)
         bindUserData(binding, userData)
         bindFollowButton(binding, userData)
         bindShareButton(binding, userData)
+    }
+
+    private fun initDetailHeader(user: User) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = user.name
     }
 
     private fun bindUserData(binding: ActivityUserDetailBinding, user: User) {
@@ -78,5 +84,10 @@ class DetailActivity : AppCompatActivity() {
 
             startActivity(Intent.createChooser(intent,"Share To:"))
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 }
