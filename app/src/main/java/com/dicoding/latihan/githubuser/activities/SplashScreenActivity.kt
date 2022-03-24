@@ -12,11 +12,12 @@ import com.dicoding.latihan.githubuser.databinding.ActivitySplashScreenBinding
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySplashScreenBinding
+    private var _binding: ActivitySplashScreenBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySplashScreenBinding.inflate(layoutInflater)
+        _binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setHeader()

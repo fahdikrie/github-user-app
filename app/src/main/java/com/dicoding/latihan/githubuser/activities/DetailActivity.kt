@@ -9,15 +9,12 @@ import com.dicoding.latihan.githubuser.databinding.ActivityUserDetailBinding
 import com.dicoding.latihan.githubuser.models.User
 
 class DetailActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityUserDetailBinding
-
-    companion object {
-        const val EXTRA_USER_DATA = "extra_user_data"
-    }
+    private var _binding: ActivityUserDetailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUserDetailBinding.inflate(layoutInflater)
+        _binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val userData = intent.getParcelableExtra<User>(EXTRA_USER_DATA)!!
@@ -85,5 +82,9 @@ class DetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    companion object {
+        const val EXTRA_USER_DATA = "extra_user_data"
     }
 }
