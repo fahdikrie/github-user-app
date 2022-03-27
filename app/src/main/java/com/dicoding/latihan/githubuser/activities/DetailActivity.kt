@@ -4,12 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.dicoding.latihan.githubuser.R
+import com.dicoding.latihan.githubuser.adapters.UserDetailPagerAdapter
 import com.dicoding.latihan.githubuser.databinding.ActivityUserDetailBinding
 import com.dicoding.latihan.githubuser.models.User
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
     private var _binding: ActivityUserDetailBinding? = null
@@ -25,6 +30,15 @@ class DetailActivity : AppCompatActivity() {
         userData = intent.getParcelableExtra(EXTRA_USER_DATA)!!
         setHeader()
         bindUserData()
+
+        val sectionsPagerAdapter = UserDetailPagerAdapter(this)
+        binding.viewPager.adapter = sectionsPagerAdapter
+
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
+
+        supportActionBar?.elevation = 0f
     }
 
     /**
@@ -110,5 +124,11 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_USER_DATA = "extra_user_data"
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.tab_user_detail_following,
+            R.string.tab_user_detail_followers
+        )
     }
 }
