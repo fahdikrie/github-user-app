@@ -127,8 +127,8 @@ class DetailActivity : AppCompatActivity() {
 
         @StringRes
         private val TAB_TITLES = intArrayOf(
-            R.string.tab_user_detail_following,
-            R.string.tab_user_detail_followers
+            R.string.tab_user_detail_followers,
+            R.string.tab_user_detail_following
         )
     }
 }
