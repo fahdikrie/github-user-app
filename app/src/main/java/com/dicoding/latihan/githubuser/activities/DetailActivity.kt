@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.dicoding.latihan.githubuser.R
 import com.dicoding.latihan.githubuser.databinding.ActivityUserDetailBinding
 import com.dicoding.latihan.githubuser.models.User
+import com.google.android.material.appbar.AppBarLayout
 
 class DetailActivity : AppCompatActivity() {
     private var _binding: ActivityUserDetailBinding? = null
@@ -19,10 +20,11 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         userData = intent.getParcelableExtra(EXTRA_USER_DATA)!!
-        setHeader(userData as User)
-        bindUserData(binding, userData as User)
+        setHeader()
+        bindUserData()
     }
 
     /**
@@ -41,46 +43,69 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.menu_option_share -> shareUser()
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
-    private fun setHeader(user: User) {
+    private fun setHeader() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = user.name
+
+        /**
+         * Reference code is taken from:
+         * https://stackoverflow.com/questions/31662416/
+         * show-collapsingtoolbarlayout-title-only-when-collapsed
+         */
+        var isShow = true
+        var scrollRange = -1
+        binding.appBar.addOnOffsetChangedListener(
+            AppBarLayout.OnOffsetChangedListener { barLayout, verticalOffset ->
+                if (scrollRange == -1) {
+                    scrollRange = barLayout?.totalScrollRange!!
+                }
+
+                if (scrollRange + verticalOffset == 0){
+                    binding.toolbarLayout.title = userData?.name
+                    isShow = true
+                } else if (isShow){
+                    binding.toolbarLayout.title = " "
+                    isShow = false
+                }
+            }
+        )
     }
 
-    private fun bindUserData(binding: ActivityUserDetailBinding, user: User) {
+    private fun bindUserData() {
         Glide
             .with(this)
-            .load(user.avatar)
+            .load(userData?.avatar)
             .circleCrop()
             .into(binding.imgDetailAvatar)
 
-        binding.tvDetailName.text = user.name
+        binding.tvDetailName.text = userData?.name
 
-        "@${user.username}".also { binding.tvDetailUsername.text = it }
-        "📍 ${user.location}".also { binding.tvDetailLocation.text = it }
-        "💼 ${user.company}".also { binding.tvDetailCompany.text = it }
-        "Repositories: ${user.repositories}".also { binding.tvDetailRepositories.text = it }
-        "Following: ${user.following}".also { binding.tvDetailFollowing.text = it }
-        "Followers: ${user.followers}".also { binding.tvDetailFollowers.text = it }
+        "@${userData?.username}".also { binding.tvDetailUsername.text = it }
+        "📍 ${userData?.location}".also { binding.tvDetailLocation.text = it }
+        "💼 ${userData?.company}".also { binding.tvDetailCompany.text = it }
+        "Repositories: ${userData?.repositories}".also { binding.tvDetailRepositories.text = it }
+        "Following: ${userData?.following}".also { binding.tvDetailFollowing.text = it }
+        "Followers: ${userData?.followers}".also { binding.tvDetailFollowers.text = it }
     }
 
-    private fun shareUser() {
+    private fun shareUser(): Boolean {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(
             Intent.EXTRA_TEXT,
             """
-                    See ${userData?.name}'s GitHub profile:
-    
-                    https://github.com/${userData?.username}
-                """.trimIndent()
+                See ${userData?.name}'s GitHub profile:
+
+                https://github.com/${userData?.username}
+            """.trimIndent()
         )
         startActivity(Intent.createChooser(intent,"Share To:"))
+        return true
     }
 
     companion object {
