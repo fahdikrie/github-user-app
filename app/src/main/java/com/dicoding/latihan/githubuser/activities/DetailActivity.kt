@@ -2,26 +2,49 @@ package com.dicoding.latihan.githubuser.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.dicoding.latihan.githubuser.R
 import com.dicoding.latihan.githubuser.databinding.ActivityUserDetailBinding
 import com.dicoding.latihan.githubuser.models.User
 
 class DetailActivity : AppCompatActivity() {
     private var _binding: ActivityUserDetailBinding? = null
     private val binding get() = _binding!!
+    private var userData: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userData = intent.getParcelableExtra<User>(EXTRA_USER_DATA)!!
-        setHeader(userData)
-        bindUserData(binding, userData)
-        bindFollowButton(binding, userData)
-        bindShareButton(binding, userData)
+        userData = intent.getParcelableExtra(EXTRA_USER_DATA)!!
+        setHeader(userData as User)
+        bindUserData(binding, userData as User)
+    }
+
+    /**
+     * Reference code is taken from:
+     * https://devofandroid.blogspot.com/2018/03/
+     * add-back-button-to-action-bar-android.html
+     */
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.option_menu_detail, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_option_share -> shareUser()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setHeader(user: User) {
@@ -46,42 +69,18 @@ class DetailActivity : AppCompatActivity() {
         "Followers: ${user.followers}".also { binding.tvDetailFollowers.text = it }
     }
 
-
-    private fun bindFollowButton(binding: ActivityUserDetailBinding, user: User) {
-        binding.btnDetailFollow.setOnClickListener {
-            Toast.makeText(
-                this,
-                "You are now following ${user.username}!",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    private fun bindShareButton(binding: ActivityUserDetailBinding, user: User) {
-        binding.btnDetailShare.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "text/plain"
-            intent.putExtra(
-                Intent.EXTRA_TEXT,
-                """
-                    See ${user.name}'s GitHub profile:
+    private fun shareUser() {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(
+            Intent.EXTRA_TEXT,
+            """
+                    See ${userData?.name}'s GitHub profile:
     
-                    https://github.com/${user.username}
+                    https://github.com/${userData?.username}
                 """.trimIndent()
-            )
-
-            startActivity(Intent.createChooser(intent,"Share To:"))
-        }
-    }
-
-    /**
-     * Reference code is taken from:
-     * https://devofandroid.blogspot.com/2018/03/
-     * add-back-button-to-action-bar-android.html
-     */
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
+        )
+        startActivity(Intent.createChooser(intent,"Share To:"))
     }
 
     companion object {

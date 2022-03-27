@@ -4,12 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-night/ic_baseline_search_24.xml" value="0.2828125" />
+        <entry key="app/src/main/res/drawable-night/ic_baseline_share_24.xml" value="0.2828125" />
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2828125" />
+        <entry key="app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.2828125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_user_detail.xml" value="0.375" />
         <entry key="app/src/main/res/layout/item_user.xml" value="0.5" />
         <entry key="app/src/main/res/layout/user_list.xml" value="0.12968591691995948" />
+        <entry key="app/src/main/res/menu/option_menu.xml" value="0.26666666666666666" />
       </map>
     </option>
   </component>

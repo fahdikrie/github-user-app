@@ -6,6 +6,7 @@
     <string name="share">Share</string>
     <string name="splash_screen_github_logo">Splash Screen Github Logo</string>
     <string name="edit_search_user_username">Username</string>
+    <string name="menu_option_share">Share</string>
 
     <string-array name="username">
         <item>JakeWharton</item>
