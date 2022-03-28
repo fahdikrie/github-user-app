@@ -5,26 +5,28 @@ import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.latihan.githubuser.R
 import com.dicoding.latihan.githubuser.adapters.UserListAdapter
 import com.dicoding.latihan.githubuser.databinding.ActivityMainBinding
-import com.dicoding.latihan.githubuser.models.User
+import com.dicoding.latihan.githubuser.models.responses.GithubUser
+import com.dicoding.latihan.githubuser.viewmodels.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private val userList = ArrayList<User>()
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.rvUsers.setHasFixedSize(true)
-        userList.addAll(userResList)
-        showRecyclerList()
+        bindViewModelToRV()
+        bindSearchView()
 
         if (applicationContext.resources.configuration.orientation ==
             Configuration.ORIENTATION_LANDSCAPE) {
@@ -34,57 +36,61 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val userResList: ArrayList<User>
-        get() {
-            val usernameRes = resources.getStringArray(R.array.username)
-            val nameRes = resources.getStringArray(R.array.name)
-            val locationRes = resources.getStringArray(R.array.location)
-            val companyRes = resources.getStringArray(R.array.company)
-            val repositoryRes = resources.getStringArray(R.array.repository)
-            val followingRes = resources.getStringArray(R.array.following)
-            val followersRes = resources.getStringArray(R.array.followers)
+    private fun bindSearchView() {
+        binding.svSearchUser.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.isBlank()) return false
 
-            /**
-             * Had some trouble on getting the image to show,
-             * so I use this reference & modified the avatar
-             * xml tag from string-array to array:
-             *
-             * https://stackoverflow.com/questions/19791845/
-             * reference-drawable-from-string-array-in-android/19792009
-             */
-            val avatarRes = resources.obtainTypedArray(R.array.avatar)
+                showLoading(true)
+                mainViewModel.getUsers(query)
+                binding.svSearchUser.clearFocus()
 
-            val listHero = ArrayList<User>()
-            for (i in usernameRes.indices) {
-                listHero.add(
-                    User(
-                        usernameRes[i],
-                        nameRes[i],
-                        locationRes[i],
-                        companyRes[i],
-                        repositoryRes[i],
-                        followingRes[i],
-                        followersRes[i],
-                        avatarRes.getResourceId(i, 0),
-                    )
-                )
+                return true
             }
 
-            avatarRes.recycle()
-            return listHero
+            override fun onQueryTextChange(query: String): Boolean {
+                return false
+            }
+        })
+    }
+
+    private fun bindViewModelToRV() {
+        mainViewModel = ViewModelProvider(
+            this, ViewModelProvider.NewInstanceFactory()
+        ).get(MainViewModel::class.java)
+
+        mainViewModel.userList.observe(this) {
+            showRecyclerList(it)
         }
 
-    private fun showRecyclerList() {
+        mainViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
+        mainViewModel.snackbarText.observe(this) {
+            Snackbar.make(
+                window.decorView.rootView,
+                it,
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun showRecyclerList(users: List<GithubUser>) {
         binding.rvUsers.layoutManager = LinearLayoutManager(this)
-        val listHeroAdapter = UserListAdapter(userList)
+        val listHeroAdapter = UserListAdapter(users)
         binding.rvUsers.adapter = listHeroAdapter
 
         listHeroAdapter.setOnItemClickCallback(object : UserListAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: User) {
+            override fun onItemClicked(data: GithubUser) {
                 val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
-                intentToDetail.putExtra(DetailActivity.EXTRA_USER_DATA, data)
+                intentToDetail.putExtra(DetailActivity.EXTRA_USER_DATA, data.login)
                 startActivity(intentToDetail)
             }
         })
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.pbSearchUser.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

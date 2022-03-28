@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.latihan.githubuser.databinding.ItemUserBinding
-import com.dicoding.latihan.githubuser.models.User
+import com.dicoding.latihan.githubuser.models.responses.GithubUser
 
 class UserListAdapter(
-    private val userList: ArrayList<User>
+    private val userList: List<GithubUser>
 ) : RecyclerView.Adapter<UserListAdapter.UserListHolder>()  {
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -20,18 +20,14 @@ class UserListAdapter(
     class UserListHolder(
         private val binding: ItemUserBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User) {
+        fun bind(user: GithubUser) {
             Glide
                 .with(this.itemView.context)
-                .load(user.avatar)
+                .load(user.avatarUrl)
                 .circleCrop()
                 .into(binding.imgAvatar)
 
-            binding.tvName.text = user.name
-
-            "@${user.username}".also { binding.tvUsername.text = it }
-            "📍 ${user.location}".also { binding.tvLocation.text = it }
-            "💼 ${user.company}".also { binding.tvCompany.text = it }
+            "@${user.login}".also { binding.tvUsername.text = it }
         }
     }
 
@@ -42,7 +38,7 @@ class UserListAdapter(
     }
 
     override fun onBindViewHolder(holder: UserListHolder, position: Int) {
-        val user: User = userList[position]
+        val user: GithubUser = userList[position]
         holder.bind(user)
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(user)
@@ -52,7 +48,7 @@ class UserListAdapter(
     override fun getItemCount(): Int = userList.size
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: User)
+        fun onItemClicked(data: GithubUser)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

@@ -6,20 +6,18 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.dicoding.latihan.githubuser.R
 import com.dicoding.latihan.githubuser.adapters.UserDetailPagerAdapter
 import com.dicoding.latihan.githubuser.databinding.ActivityUserDetailBinding
-import com.dicoding.latihan.githubuser.models.User
+import com.dicoding.latihan.githubuser.models.responses.GithubUser
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
     private var _binding: ActivityUserDetailBinding? = null
     private val binding get() = _binding!!
-    private var userData: User? = null
+    private var userData: GithubUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +27,7 @@ class DetailActivity : AppCompatActivity() {
 
         userData = intent.getParcelableExtra(EXTRA_USER_DATA)!!
         setHeader()
-        bindUserData()
+//        bindUserData()
 
         val sectionsPagerAdapter = UserDetailPagerAdapter(this)
         binding.viewPager.adapter = sectionsPagerAdapter
@@ -56,12 +54,12 @@ class DetailActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_option_share -> shareUser()
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.menu_option_share -> shareUser()
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
     private fun setHeader() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -80,7 +78,7 @@ class DetailActivity : AppCompatActivity() {
                 }
 
                 if (scrollRange + verticalOffset == 0){
-                    binding.toolbarLayout.title = userData?.name
+                    binding.toolbarLayout.title = userData?.login
                     isShow = true
                 } else if (isShow){
                     binding.toolbarLayout.title = " "
@@ -90,37 +88,37 @@ class DetailActivity : AppCompatActivity() {
         )
     }
 
-    private fun bindUserData() {
-        Glide
-            .with(this)
-            .load(userData?.avatar)
-            .circleCrop()
-            .into(binding.imgDetailAvatar)
-
-        binding.tvDetailName.text = userData?.name
-
-        "@${userData?.username}".also { binding.tvDetailUsername.text = it }
-        "📍 ${userData?.location}".also { binding.tvDetailLocation.text = it }
-        "💼 ${userData?.company}".also { binding.tvDetailCompany.text = it }
-        "Repositories: ${userData?.repositories}".also { binding.tvDetailRepositories.text = it }
-        "Following: ${userData?.following}".also { binding.tvDetailFollowing.text = it }
-        "Followers: ${userData?.followers}".also { binding.tvDetailFollowers.text = it }
-    }
-
-    private fun shareUser(): Boolean {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.putExtra(
-            Intent.EXTRA_TEXT,
-            """
-                See ${userData?.name}'s GitHub profile:
-
-                https://github.com/${userData?.username}
-            """.trimIndent()
-        )
-        startActivity(Intent.createChooser(intent,"Share To:"))
-        return true
-    }
+//    private fun bindUserData() {
+//        Glide
+//            .with(this)
+//            .load(userData?.avatar_url)
+//            .circleCrop()
+//            .into(binding.imgDetailAvatar)
+//
+//        binding.tvDetailName.text = userData?.name
+//
+//        "@${userData?.username}".also { binding.tvDetailUsername.text = it }
+//        "📍 ${userData?.location}".also { binding.tvDetailLocation.text = it }
+//        "💼 ${userData?.company}".also { binding.tvDetailCompany.text = it }
+//        "Repositories: ${userData?.repositories}".also { binding.tvDetailRepositories.text = it }
+//        "Following: ${userData?.following}".also { binding.tvDetailFollowing.text = it }
+//        "Followers: ${userData?.followers}".also { binding.tvDetailFollowers.text = it }
+//    }
+//
+//    private fun shareUser(): Boolean {
+//        val intent = Intent(Intent.ACTION_SEND)
+//        intent.type = "text/plain"
+//        intent.putExtra(
+//            Intent.EXTRA_TEXT,
+//            """
+//                See ${userData?.name}'s GitHub profile:
+//
+//                https://github.com/${userData?.username}
+//            """.trimIndent()
+//        )
+//        startActivity(Intent.createChooser(intent,"Share To:"))
+//        return true
+//    }
 
     companion object {
         const val EXTRA_USER_DATA = "extra_user_data"
