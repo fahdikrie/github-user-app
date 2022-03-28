@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2828125" />
         <entry key="app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.2828125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2520833333333333" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.10054347826086957" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_user_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_followers.xml" value="0.11822916666666666" />

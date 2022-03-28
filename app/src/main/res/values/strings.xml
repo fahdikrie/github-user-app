@@ -12,6 +12,7 @@
     <string name="tab_user_detail_followers">Followers</string>
     <string name="fragment_text_followers">Followers</string>
     <string name="fragment_text_following">Following</string>
+    <string name="dark_mode">Dark Mode</string>
 
     <string-array name="username">
         <item>JakeWharton</item>
