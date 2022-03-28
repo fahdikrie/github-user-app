@@ -192,7 +192,6 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
     <ProgressBar
         android:id="@+id/pb_detail_user"
         style="?android:attr/progressBarStyle"

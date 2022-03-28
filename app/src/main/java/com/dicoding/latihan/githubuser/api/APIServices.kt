@@ -22,11 +22,11 @@ interface APIServices {
     fun getDetailUserFollowersService(
         @Path("username")
         username: String?
-    ): Call<GithubUserFollowResponse>
+    ): Call<List<GithubUserFollow>>
 
     @GET("users/{username}/following")
     fun getDetailUserFollowingService(
         @Path("username")
         username: String?
-    ): Call<GithubUserFollowResponse>
+    ): Call<List<GithubUserFollow>>
 }

@@ -80,10 +80,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun showRecyclerList(users: List<GithubUser>) {
         binding.rvUsers.layoutManager = LinearLayoutManager(this)
-        val listHeroAdapter = UserListAdapter(users)
-        binding.rvUsers.adapter = listHeroAdapter
+        val userListAdapter = UserListAdapter(users)
+        binding.rvUsers.adapter = userListAdapter
 
-        listHeroAdapter.setOnItemClickCallback(object : UserListAdapter.OnItemClickCallback {
+        userListAdapter.setOnItemClickCallback(object : UserListAdapter.OnItemClickCallback {
             override fun onItemClicked(data: GithubUser) {
                 val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
                 intentToDetail.putExtra(DetailActivity.EXTRA_USERNAME, data.login)

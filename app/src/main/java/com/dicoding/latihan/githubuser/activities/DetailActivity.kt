@@ -23,7 +23,7 @@ class DetailActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private var userDetailData: GithubUserDetailResponse? = null
     private lateinit var detailViewModel: DetailViewModel
-    private lateinit var userName: String
+    private lateinit var username: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        userName = intent.getStringExtra(EXTRA_USERNAME)!!
+        username = intent.getStringExtra(EXTRA_USERNAME)!!
         bindViewModelData()
         setTabLayout()
     }
@@ -50,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
             this, ViewModelProvider.NewInstanceFactory()
         ).get(DetailViewModel::class.java)
 
-        detailViewModel.getUser(userName)
+        detailViewModel.getUser(username)
 
         detailViewModel.userDetail.observe(this) {
             bindUserData(it)

@@ -2,12 +2,6 @@ package com.dicoding.latihan.githubuser.models.responses
 
 import com.google.gson.annotations.SerializedName
 
-data class GithubUserFollowResponse(
-
-	@field:SerializedName("Response")
-	val response: List<GithubUserFollow?>? = null
-)
-
 data class GithubUserFollow(
 
 	@field:SerializedName("gists_url")

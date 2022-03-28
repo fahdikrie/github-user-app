@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dicoding.latihan.githubuser.api.APIConfig
 import com.dicoding.latihan.githubuser.models.responses.GithubUserFollow
-import com.dicoding.latihan.githubuser.models.responses.GithubUserFollowResponse
 import com.dicoding.latihan.githubuser.utils.Event
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,8 +13,8 @@ import retrofit2.Response
 
 class FollowersViewModel: ViewModel() {
 
-    private val _userList = MutableLiveData<List<GithubUserFollow>>()
-    val userList: LiveData<List<GithubUserFollow>> = _userList
+    private val _followersList = MutableLiveData<List<GithubUserFollow>>()
+    val followersList: LiveData<List<GithubUserFollow>> = _followersList
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -24,23 +23,23 @@ class FollowersViewModel: ViewModel() {
     val snackbarText: LiveData<Event<String>> = _snackbarText
 
     @Suppress("UNCHECKED_CAST")
-    fun getUsers(query: String?) {
+    fun getFollowers(username: String?) {
         _isLoading.value = true
-        val client = APIConfig.getAPIServices().getDetailUserFollowersService(query)
-        client.enqueue(object : Callback<GithubUserFollowResponse> {
+        val client = APIConfig.getAPIServices().getDetailUserFollowersService(username)
+        client.enqueue(object : Callback<List<GithubUserFollow>> {
             override fun onResponse(
-                call: Call<GithubUserFollowResponse>,
-                response: Response<GithubUserFollowResponse>
+                call: Call<List<GithubUserFollow>>,
+                response: Response<List<GithubUserFollow>>
             ) {
                 _isLoading.value = false
 
                 if (response.isSuccessful) {
-                    val userListResponse = response.body()?.response
+                    val followersListResponse = response.body()
 
-                    if (userListResponse.isNullOrEmpty()) {
+                    if (followersListResponse.isNullOrEmpty()) {
                         _snackbarText.value = Event("User not found")
                     } else {
-                        _userList.value = userListResponse as List<GithubUserFollow>
+                        _followersList.value = followersListResponse as List<GithubUserFollow>
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
@@ -48,7 +47,7 @@ class FollowersViewModel: ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<GithubUserFollowResponse>, t: Throwable) {
+            override fun onFailure(call: Call<List<GithubUserFollow>>, t: Throwable) {
                 _isLoading.value = false
                 _snackbarText.value = Event(t.message.toString())
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
