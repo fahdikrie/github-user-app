@@ -17,4 +17,12 @@
         <item name="colorOnContainer">@color/white_github</item>
         <item name="colorContainer">@color/black_github</item>
     </style>
+    <style name="Theme.GithubUser.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GithubUser.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GithubUser.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

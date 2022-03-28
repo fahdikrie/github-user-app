@@ -5,6 +5,13 @@
     <string name="follow">Follow</string>
     <string name="share">Share</string>
     <string name="splash_screen_github_logo">Splash Screen Github Logo</string>
+    <string name="edit_search_user_username">Username</string>
+    <string name="menu_option_share">Share</string>
+    <string name="action_settings">Settings</string>
+    <string name="tab_user_detail_following">Following</string>
+    <string name="tab_user_detail_followers">Followers</string>
+    <string name="fragment_text_followers">Followers</string>
+    <string name="fragment_text_following">Following</string>
 
     <string-array name="username">
         <item>JakeWharton</item>
