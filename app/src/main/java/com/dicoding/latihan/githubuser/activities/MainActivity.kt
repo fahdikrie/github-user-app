@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         ).get(MainViewModel::class.java)
 
         mainViewModel.userList.observe(this) {
-            showRecyclerList(it)
+            if (it.isNotEmpty()) showRecyclerList(it)
         }
 
         mainViewModel.isLoading.observe(this) {
@@ -68,11 +68,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.snackbarText.observe(this) {
-            Snackbar.make(
-                window.decorView.rootView,
-                it,
-                Snackbar.LENGTH_SHORT
-            ).show()
+            it.getContentIfNotHandled()?.let { snackBarText ->
+                Snackbar.make(
+                    window.decorView.rootView,
+                    snackBarText,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -84,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         listHeroAdapter.setOnItemClickCallback(object : UserListAdapter.OnItemClickCallback {
             override fun onItemClicked(data: GithubUser) {
                 val intentToDetail = Intent(this@MainActivity, DetailActivity::class.java)
-                intentToDetail.putExtra(DetailActivity.EXTRA_USER_DATA, data.login)
+                intentToDetail.putExtra(DetailActivity.EXTRA_USERNAME, data.login)
                 startActivity(intentToDetail)
             }
         })

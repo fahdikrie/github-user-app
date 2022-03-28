@@ -4,20 +4,26 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.dicoding.latihan.githubuser.R
 import com.dicoding.latihan.githubuser.adapters.UserDetailPagerAdapter
 import com.dicoding.latihan.githubuser.databinding.ActivityUserDetailBinding
-import com.dicoding.latihan.githubuser.models.responses.GithubUser
+import com.dicoding.latihan.githubuser.models.responses.GithubUserDetailResponse
+import com.dicoding.latihan.githubuser.viewmodels.DetailViewModel
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
     private var _binding: ActivityUserDetailBinding? = null
     private val binding get() = _binding!!
-    private var userData: GithubUser? = null
+    private var userDetailData: GithubUserDetailResponse? = null
+    private lateinit var detailViewModel: DetailViewModel
+    private lateinit var userName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,18 +31,46 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        userData = intent.getParcelableExtra(EXTRA_USER_DATA)!!
-        setHeader()
-//        bindUserData()
+        userName = intent.getStringExtra(EXTRA_USERNAME)!!
+        bindViewModelData()
+        setTabLayout()
+    }
 
+    private fun setTabLayout() {
         val sectionsPagerAdapter = UserDetailPagerAdapter(this)
         binding.viewPager.adapter = sectionsPagerAdapter
 
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
+    }
 
-        supportActionBar?.elevation = 0f
+    private fun bindViewModelData() {
+        detailViewModel = ViewModelProvider(
+            this, ViewModelProvider.NewInstanceFactory()
+        ).get(DetailViewModel::class.java)
+
+        detailViewModel.getUser(userName)
+
+        detailViewModel.userDetail.observe(this) {
+            bindUserData(it)
+            setHeader(it)
+            userDetailData = it
+        }
+
+        detailViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
+        detailViewModel.snackbarText.observe(this) {
+            it.getContentIfNotHandled()?.let { snackBarText ->
+                Snackbar.make(
+                    window.decorView.rootView,
+                    snackBarText,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     /**
@@ -54,15 +88,16 @@ class DetailActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            R.id.menu_option_share -> shareUser()
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_option_share -> shareUser()
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
-    private fun setHeader() {
+    private fun setHeader(userData: GithubUserDetailResponse) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.elevation = 0f
 
         /**
          * Reference code is taken from:
@@ -88,40 +123,44 @@ class DetailActivity : AppCompatActivity() {
         )
     }
 
-//    private fun bindUserData() {
-//        Glide
-//            .with(this)
-//            .load(userData?.avatar_url)
-//            .circleCrop()
-//            .into(binding.imgDetailAvatar)
-//
-//        binding.tvDetailName.text = userData?.name
-//
-//        "@${userData?.username}".also { binding.tvDetailUsername.text = it }
-//        "📍 ${userData?.location}".also { binding.tvDetailLocation.text = it }
-//        "💼 ${userData?.company}".also { binding.tvDetailCompany.text = it }
-//        "Repositories: ${userData?.repositories}".also { binding.tvDetailRepositories.text = it }
-//        "Following: ${userData?.following}".also { binding.tvDetailFollowing.text = it }
-//        "Followers: ${userData?.followers}".also { binding.tvDetailFollowers.text = it }
-//    }
-//
-//    private fun shareUser(): Boolean {
-//        val intent = Intent(Intent.ACTION_SEND)
-//        intent.type = "text/plain"
-//        intent.putExtra(
-//            Intent.EXTRA_TEXT,
-//            """
-//                See ${userData?.name}'s GitHub profile:
-//
-//                https://github.com/${userData?.username}
-//            """.trimIndent()
-//        )
-//        startActivity(Intent.createChooser(intent,"Share To:"))
-//        return true
-//    }
+    private fun bindUserData(userData: GithubUserDetailResponse) {
+        Glide
+            .with(this)
+            .load(userData.avatarUrl)
+            .circleCrop()
+            .into(binding.imgDetailAvatar)
+
+        binding.tvDetailName.text = userData.name
+
+        "@${userData.login}".also { binding.tvDetailUsername.text = it }
+        "📍 ${userData.location  ?: "-"}".also { binding.tvDetailLocation.text = it }
+        "💼 ${userData.company ?: "-"}".also { binding.tvDetailCompany.text = it }
+        "Repositories: ${userData.publicRepos}".also { binding.tvDetailRepositories.text = it }
+        "Following: ${userData.following}".also { binding.tvDetailFollowing.text = it }
+        "Followers: ${userData.followers}".also { binding.tvDetailFollowers.text = it }
+    }
+
+    private fun shareUser(): Boolean {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(
+            Intent.EXTRA_TEXT,
+            """
+                See ${userDetailData?.name}'s GitHub profile:
+
+                https://github.com/${userDetailData?.login}
+            """.trimIndent()
+        )
+        startActivity(Intent.createChooser(intent,"Share To:"))
+        return true
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.pbDetailUser.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
 
     companion object {
-        const val EXTRA_USER_DATA = "extra_user_data"
+        const val EXTRA_USERNAME = "extra_username"
 
         @StringRes
         private val TAB_TITLES = intArrayOf(
