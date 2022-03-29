@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/img_splash_logo"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:contentDescription="@string/splash_screen_github_logo"

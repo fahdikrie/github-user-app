@@ -13,8 +13,8 @@ import retrofit2.Response
 
 class FollowingViewModel: ViewModel() {
 
-    private val _followingList = MutableLiveData<List<GithubUserFollow>>()
-    val followingList: LiveData<List<GithubUserFollow>> = _followingList
+    private val _followingList = MutableLiveData<List<GithubUserFollow>?>()
+    val followingList: LiveData<List<GithubUserFollow>?> = _followingList
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading

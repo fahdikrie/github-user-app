@@ -87,7 +87,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setFloatingActionButtonOnClickListener(isUserInFavorite: Boolean) {
-        binding.fab.setOnClickListener {
+        binding.fabFavoriteBtn.setOnClickListener {
             if (username.isBlank() || userDetailData == null) return@setOnClickListener
 
             Log.d("TES", if (isUserInFavorite) "True" else "False")
@@ -117,7 +117,7 @@ class DetailActivity : AppCompatActivity() {
             else -> R.drawable.ic_baseline_favorite_border_24
         }
 
-        binding.fab.setImageDrawable(
+        binding.fabFavoriteBtn.setImageDrawable(
             ContextCompat.getDrawable(
                 this@DetailActivity,
                 drawable

@@ -54,7 +54,7 @@ class FollowingFragment : Fragment() {
         followingViewModel.getFollowing(username)
 
         followingViewModel.followingList.observe(viewLifecycleOwner) {
-            showRecyclerList(it)
+            showRecyclerList(it!!)
         }
 
         followingViewModel.isLoading.observe(viewLifecycleOwner) {

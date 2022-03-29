@@ -1,11 +1,10 @@
 package com.dicoding.latihan.githubuser.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.latihan.githubuser.activities.DetailActivity
@@ -55,7 +54,7 @@ class FollowersFragment : Fragment() {
         followersViewModel.getFollowers(username)
 
         followersViewModel.followersList.observe(viewLifecycleOwner) {
-            showRecyclerList(it)
+            showRecyclerList(it!!)
         }
 
         followersViewModel.isLoading.observe(viewLifecycleOwner) {

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_layout_following"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.FollowingFragment">
 
     <ProgressBar
         style="?android:attr/progressBarStyle"
+        android:id="@+id/pb_following"
         android:layout_width="20dp"
         android:layout_gravity = "center"
         android:layout_height="20dp"
@@ -14,6 +16,7 @@
         tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_following"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
