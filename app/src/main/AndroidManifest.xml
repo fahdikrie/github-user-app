@@ -14,7 +14,7 @@
         android:theme="@style/Theme.GithubUser"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".activities.FavoritesActivity"
+            android:name=".activities.FavoriteUserActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SettingsActivity"

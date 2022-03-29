@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2828125" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.2828125" />
         <entry key="app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.2828125" />
+        <entry key="app/src/main/res/layout/activity_favorite_user.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_favorites.xml" value="0.12968591691995948" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.10054347826086957" />
@@ -32,5 +33,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>

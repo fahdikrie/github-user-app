@@ -9,7 +9,7 @@ import com.dicoding.latihan.githubuser.models.room.entities.FavoriteUserEntity
 
 @Database(entities = [FavoriteUserEntity::class], version = 1, exportSchema = false)
 abstract class FavoriteUserDatabase : RoomDatabase() {
-    abstract fun newsDao(): FavoriteUserDao
+    abstract fun favoriteUserDao(): FavoriteUserDao
 
     companion object {
         @Volatile

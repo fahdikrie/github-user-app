@@ -30,13 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         bindViewModelToRV()
         bindSearchView()
-
-        if (applicationContext.resources.configuration.orientation ==
-            Configuration.ORIENTATION_LANDSCAPE) {
-            binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
-        } else {
-            binding.rvUsers.layoutManager = LinearLayoutManager(this)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -46,9 +39,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.favorite_users -> true
+            R.id.favorite_users -> {
+                startActivity(Intent(
+                    this@MainActivity,
+                    FavoriteUserActivity::class.java
+                ))
+                return true
+            }
             R.id.settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
+                startActivity(Intent(
+                    this@MainActivity,
+                    SettingsActivity::class.java
+                ))
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -80,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         )[MainViewModel::class.java]
 
         mainViewModel.getUsers("fahdii")
+        binding.svSearchUser.setQuery("fahdii", false)
 
         mainViewModel.userList.observe(this) {
             if (it.isNotEmpty()) showRecyclerList(it)
@@ -101,7 +104,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showRecyclerList(users: List<GithubUser>) {
-        binding.rvUsers.layoutManager = LinearLayoutManager(this)
+        if (applicationContext.resources.configuration.orientation ==
+            Configuration.ORIENTATION_LANDSCAPE) {
+            binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
+        } else {
+            binding.rvUsers.layoutManager = LinearLayoutManager(this)
+        }
+
         val userListAdapter = UserListAdapter(users)
         binding.rvUsers.adapter = userListAdapter
 

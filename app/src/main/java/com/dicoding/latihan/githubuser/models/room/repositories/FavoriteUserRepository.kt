@@ -7,20 +7,16 @@ import com.dicoding.latihan.githubuser.models.room.entities.FavoriteUserEntity
 class FavoriteUserRepository private constructor(
     private val favoriteUserDao: FavoriteUserDao
 ) {
-    fun getFavoriteUsers(): LiveData<List<FavoriteUserEntity>> {
+    fun getAllFavoriteUsers(): LiveData<List<FavoriteUserEntity>> {
         return favoriteUserDao.getAllFavoriteUsers()
     }
 
-    suspend fun setAsFavoriteUser(favoriteUserEntity: FavoriteUserEntity) {
+    suspend fun insertFavoriteUser(favoriteUserEntity: FavoriteUserEntity) {
         favoriteUserDao.insertFavoriteUser(favoriteUserEntity)
     }
 
-    suspend fun unsetFavoriteUser(favoriteUserEntity: FavoriteUserEntity) {
-        favoriteUserDao.deleteFavoriteUser(favoriteUserEntity)
-    }
-
-    suspend fun checkIfFavoriteUser(login: String) {
-        favoriteUserDao.isFavoriteUser(login)
+    suspend fun deleteFavoriteUser(login: String) {
+        favoriteUserDao.deleteFavoriteUser(login)
     }
 
     companion object {

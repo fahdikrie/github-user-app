@@ -2,18 +2,25 @@ package com.dicoding.latihan.githubuser.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.dicoding.latihan.githubuser.R
 import com.dicoding.latihan.githubuser.adapters.UserDetailPagerAdapter
 import com.dicoding.latihan.githubuser.databinding.ActivityUserDetailBinding
 import com.dicoding.latihan.githubuser.models.responses.GithubUserDetailResponse
+import com.dicoding.latihan.githubuser.models.room.entities.FavoriteUserEntity
 import com.dicoding.latihan.githubuser.viewmodels.DetailViewModel
+import com.dicoding.latihan.githubuser.viewmodels.FavoriteUserViewModel
+import com.dicoding.latihan.githubuser.viewmodels.factories.FavoriteUserViewModelFactory
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -24,6 +31,10 @@ class DetailActivity : AppCompatActivity() {
     private var userDetailData: GithubUserDetailResponse? = null
     private lateinit var detailViewModel: DetailViewModel
     private lateinit var username: String
+    private lateinit var favoriteUserViewModelFactory: FavoriteUserViewModelFactory
+    private val favoriteUserViewModel: FavoriteUserViewModel by viewModels {
+        favoriteUserViewModelFactory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +44,12 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.title = " "
 
         username = intent.getStringExtra(EXTRA_USERNAME)!!
-        bindViewModelData()
+        bindDetailViewModelData()
+        bindFavoriteUserViewModelData()
         setTabLayout()
     }
 
-    private fun setTabLayout() {
-        val sectionsPagerAdapter = UserDetailPagerAdapter(this)
-        binding.viewPager.adapter = sectionsPagerAdapter
-
-        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-            tab.text = resources.getString(TAB_TITLES[position])
-        }.attach()
-    }
-
-    private fun bindViewModelData() {
+    private fun bindDetailViewModelData() {
         detailViewModel = ViewModelProvider(
             this, ViewModelProvider.NewInstanceFactory()
         )[DetailViewModel::class.java]
@@ -72,6 +75,72 @@ class DetailActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun bindFavoriteUserViewModelData() {
+        favoriteUserViewModelFactory = FavoriteUserViewModelFactory.getInstance(this)
+        favoriteUserViewModel.getAllFavoriteUsers().observe(this) {
+            val isUserInFavorite = it.any { user -> user.login == username }
+            setFloatingActionButtonOnClickListener(isUserInFavorite)
+            setFloatingActionButtonImage(isUserInFavorite)
+        }
+    }
+
+    private fun setFloatingActionButtonOnClickListener(isUserInFavorite: Boolean) {
+        binding.fab.setOnClickListener {
+            if (username.isBlank() || userDetailData == null) return@setOnClickListener
+
+            Log.d("TES", if (isUserInFavorite) "True" else "False")
+
+            when (!isUserInFavorite) {
+                true -> {
+                    val favoriteUserEntity = FavoriteUserEntity(
+                        login = username,
+                        avatarUrl = userDetailData?.avatarUrl
+                    )
+                    favoriteUserViewModel.setAsFavoriteUser(favoriteUserEntity)
+                    setFloatingActionButtonImage(true)
+                    showFavoriteInteractionToast(true)
+                }
+                false -> {
+                    favoriteUserViewModel.unsetFavoriteUser(username)
+                    setFloatingActionButtonImage(false)
+                    showFavoriteInteractionToast(false)
+                }
+            }
+        }
+    }
+
+    private fun setFloatingActionButtonImage(isUserInFavorite: Boolean) {
+        val drawable = when (isUserInFavorite) {
+            true -> R.drawable.ic_baseline_favorite_24
+            else -> R.drawable.ic_baseline_favorite_border_24
+        }
+
+        binding.fab.setImageDrawable(
+            ContextCompat.getDrawable(
+                this@DetailActivity,
+                drawable
+            )
+        )
+    }
+
+    private fun showFavoriteInteractionToast(isUserInFavorite: Boolean) {
+        val text = when (isUserInFavorite) {
+            true -> "User @$username is added to your Favorites!"
+            else -> "User @$username is removed from your Favorites!"
+        }
+
+        Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setTabLayout() {
+        val sectionsPagerAdapter = UserDetailPagerAdapter(this)
+        binding.viewPager.adapter = sectionsPagerAdapter
+
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
     }
 
     /**
