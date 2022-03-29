@@ -13,6 +13,9 @@
     <string name="fragment_text_followers">Followers</string>
     <string name="fragment_text_following">Following</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="favorite_button">Favorite Button</string>
+    <string name="favorite_users">Favorite Users</string>
+    <string name="settings">Settings</string>
 
     <string-array name="username">
         <item>JakeWharton</item>

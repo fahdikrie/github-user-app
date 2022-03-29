@@ -30,6 +30,7 @@ class DetailActivity : AppCompatActivity() {
         _binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = " "
 
         username = intent.getStringExtra(EXTRA_USERNAME)!!
         bindViewModelData()
@@ -48,7 +49,7 @@ class DetailActivity : AppCompatActivity() {
     private fun bindViewModelData() {
         detailViewModel = ViewModelProvider(
             this, ViewModelProvider.NewInstanceFactory()
-        ).get(DetailViewModel::class.java)
+        )[DetailViewModel::class.java]
 
         detailViewModel.getUser(username)
 
@@ -113,7 +114,7 @@ class DetailActivity : AppCompatActivity() {
                 }
 
                 if (scrollRange + verticalOffset == 0){
-                    binding.toolbarLayout.title = userData?.login
+                    binding.toolbarLayout.title = userData.login
                     isShow = true
                 } else if (isShow){
                     binding.toolbarLayout.title = " "

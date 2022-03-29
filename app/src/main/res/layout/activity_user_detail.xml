@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -160,6 +161,17 @@
                         app:layout_constraintTop_toBottomOf="@+id/img_detail_avatar"
                         tools:text="Full Name" />
 
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/black_github"
+                        app:tabGravity="fill"
+                        app:tabMaxWidth="0dp"
+                        app:tabTextColor="@android:color/white"
+                        tools:ignore="SpeakableTextPresentCheck"
+                        tools:layout_editor_absoluteY="408dp" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.Toolbar
@@ -172,23 +184,15 @@
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black_github"
-                app:tabGravity="fill"
-                app:tabMaxWidth="0dp"
-                app:tabTextColor="@android:color/white"
-                tools:ignore="SpeakableTextPresentCheck" />
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+        </androidx.viewpager2.widget.ViewPager2>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -203,6 +207,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/favorite_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

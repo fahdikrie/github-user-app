@@ -5,11 +5,14 @@ import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dicoding.latihan.githubuser.R
 import com.dicoding.latihan.githubuser.adapters.UserListAdapter
 import com.dicoding.latihan.githubuser.databinding.ActivityMainBinding
 import com.dicoding.latihan.githubuser.models.responses.GithubUser
@@ -36,6 +39,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.option_menu_user, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.favorite_users -> true
+            R.id.settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
     private fun bindSearchView() {
         binding.svSearchUser.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -57,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     private fun bindViewModelToRV() {
         mainViewModel = ViewModelProvider(
             this, ViewModelProvider.NewInstanceFactory()
-        ).get(MainViewModel::class.java)
+        )[MainViewModel::class.java]
 
         mainViewModel.userList.observe(this) {
             if (it.isNotEmpty()) showRecyclerList(it)
