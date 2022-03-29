@@ -90,8 +90,6 @@ class DetailActivity : AppCompatActivity() {
         binding.fabFavoriteBtn.setOnClickListener {
             if (username.isBlank() || userDetailData == null) return@setOnClickListener
 
-            Log.d("TES", if (isUserInFavorite) "True" else "False")
-
             when (!isUserInFavorite) {
                 true -> {
                     val favoriteUserEntity = FavoriteUserEntity(
