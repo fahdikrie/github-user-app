@@ -79,6 +79,8 @@ class MainActivity : AppCompatActivity() {
             this, ViewModelProvider.NewInstanceFactory()
         )[MainViewModel::class.java]
 
+        mainViewModel.getUsers("fahdii")
+
         mainViewModel.userList.observe(this) {
             if (it.isNotEmpty()) showRecyclerList(it)
         }
