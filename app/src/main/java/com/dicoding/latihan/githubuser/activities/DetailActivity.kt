@@ -2,7 +2,6 @@ package com.dicoding.latihan.githubuser.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -47,6 +46,28 @@ class DetailActivity : AppCompatActivity() {
         bindDetailViewModelData()
         bindFavoriteUserViewModelData()
         setTabLayout()
+    }
+
+    /**
+     * Reference code is taken from:
+     * https://devofandroid.blogspot.com/2018/03/
+     * add-back-button-to-action-bar-android.html
+     */
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.option_menu_user_detail, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_option_share -> shareUser()
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun bindDetailViewModelData() {
@@ -112,7 +133,7 @@ class DetailActivity : AppCompatActivity() {
     private fun setFloatingActionButtonImage(isUserInFavorite: Boolean) {
         val drawable = when (isUserInFavorite) {
             true -> R.drawable.ic_baseline_favorite_24
-            else -> R.drawable.ic_baseline_favorite_border_24
+            false -> R.drawable.ic_baseline_favorite_border_24
         }
 
         binding.fabFavoriteBtn.setImageDrawable(
@@ -126,7 +147,7 @@ class DetailActivity : AppCompatActivity() {
     private fun showFavoriteInteractionToast(isUserInFavorite: Boolean) {
         val text = when (isUserInFavorite) {
             true -> "User @$username is added to your Favorites!"
-            else -> "User @$username is removed from your Favorites!"
+            false -> "User @$username is removed from your Favorites!"
         }
 
         Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
@@ -139,28 +160,6 @@ class DetailActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
-    }
-
-    /**
-     * Reference code is taken from:
-     * https://devofandroid.blogspot.com/2018/03/
-     * add-back-button-to-action-bar-android.html
-     */
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.option_menu_user_detail, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_option_share -> shareUser()
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun setHeader(userData: GithubUserDetailResponse) {
