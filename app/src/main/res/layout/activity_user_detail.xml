@@ -87,12 +87,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="24dp"
                         android:fontFamily="sans-serif-light"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/white"
                         android:textSize="11sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/tv_detail_followers"
@@ -165,12 +163,15 @@
                         android:id="@+id/tabs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:background="@color/black_github"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_detail_following"
                         app:tabGravity="fill"
                         app:tabMaxWidth="0dp"
                         app:tabTextColor="@android:color/white"
-                        tools:ignore="SpeakableTextPresentCheck"
-                        tools:layout_editor_absoluteY="408dp" />
+                        tools:ignore="SpeakableTextPresentCheck" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

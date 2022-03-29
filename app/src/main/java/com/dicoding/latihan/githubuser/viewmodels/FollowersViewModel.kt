@@ -37,7 +37,7 @@ class FollowersViewModel: ViewModel() {
                     val followersListResponse = response.body()
 
                     if (followersListResponse.isNullOrEmpty()) {
-                        _snackbarText.value = Event("User not found")
+                        _snackbarText.value = Event("Followers not found")
                     } else {
                         _followersList.value = followersListResponse as List<GithubUserFollow>
                     }
