@@ -1,12 +1,9 @@
 package com.dicoding.latihan.githubuser.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dicoding.latihan.githubuser.models.room.entities.FavoriteUserEntity
 import com.dicoding.latihan.githubuser.models.room.repositories.FavoriteUserRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FavoriteUserViewModel(

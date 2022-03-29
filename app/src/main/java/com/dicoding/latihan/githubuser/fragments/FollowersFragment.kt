@@ -50,7 +50,7 @@ class FollowersFragment : Fragment() {
     private fun bindViewModelData() {
         followersViewModel = ViewModelProvider(
             this, ViewModelProvider.NewInstanceFactory()
-        ).get(FollowersViewModel::class.java)
+        )[FollowersViewModel::class.java]
 
         followersViewModel.getFollowers(username)
 

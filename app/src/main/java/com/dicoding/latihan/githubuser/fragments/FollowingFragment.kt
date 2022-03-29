@@ -49,7 +49,7 @@ class FollowingFragment : Fragment() {
     private fun bindViewModelData() {
         followingViewModel = ViewModelProvider(
             this, ViewModelProvider.NewInstanceFactory()
-        ).get(FollowingViewModel::class.java)
+        )[FollowingViewModel::class.java]
 
         followingViewModel.getFollowing(username)
 

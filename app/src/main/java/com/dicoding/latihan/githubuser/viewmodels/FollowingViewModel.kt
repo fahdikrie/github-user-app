@@ -39,7 +39,7 @@ class FollowingViewModel: ViewModel() {
                     if (followingListResponse.isNullOrEmpty()) {
                         _snackbarText.value = Event("Followings not found")
                     } else {
-                        _followingList.value = followingListResponse as List<GithubUserFollow>
+                        _followingList.value = followingListResponse
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
