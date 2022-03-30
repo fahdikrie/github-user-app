@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class SettingPreference private constructor(private val dataStore: DataStore<Preferences>) {
-
     private val themeKey = booleanPreferencesKey("theme_setting")
 
     fun getThemeSetting(): Flow<Boolean> {
@@ -35,5 +34,4 @@ class SettingPreference private constructor(private val dataStore: DataStore<Pre
             }
         }
     }
-
 }

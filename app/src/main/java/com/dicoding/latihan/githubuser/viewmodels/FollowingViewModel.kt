@@ -12,7 +12,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FollowingViewModel: ViewModel() {
-
     private val _followingList = MutableLiveData<List<GithubUserFollow>?>()
     val followingList: LiveData<List<GithubUserFollow>?> = _followingList
 

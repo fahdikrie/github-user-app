@@ -81,5 +81,4 @@ class FollowingFragment : Fragment() {
     private fun showLoading(isLoading: Boolean) {
         binding.pbFollowing.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }

@@ -13,7 +13,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel: ViewModel() {
-
     private val _userList = MutableLiveData<List<GithubUser>>()
     val userList: LiveData<List<GithubUser>> = _userList
 
