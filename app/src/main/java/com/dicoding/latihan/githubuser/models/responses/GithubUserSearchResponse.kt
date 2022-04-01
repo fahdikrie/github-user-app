@@ -3,7 +3,6 @@ package com.dicoding.latihan.githubuser.models.responses
 import com.google.gson.annotations.SerializedName
 
 data class GithubUserSearchResponse(
-
 	@field:SerializedName("total_count")
 	val totalCount: Int? = null,
 
@@ -15,7 +14,6 @@ data class GithubUserSearchResponse(
 )
 
 data class GithubUser(
-
 	@field:SerializedName("gists_url")
 	val gistsUrl: String? = null,
 

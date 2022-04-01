@@ -3,7 +3,6 @@ package com.dicoding.latihan.githubuser.models.responses
 import com.google.gson.annotations.SerializedName
 
 data class GithubUserFollow(
-
 	@field:SerializedName("gists_url")
 	val gistsUrl: String? = null,
 

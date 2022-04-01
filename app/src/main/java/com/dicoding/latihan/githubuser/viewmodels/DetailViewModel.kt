@@ -12,7 +12,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DetailViewModel: ViewModel() {
-
     private val _userDetail = MutableLiveData<GithubUserDetailResponse>()
     val userDetail: LiveData<GithubUserDetailResponse> = _userDetail
 

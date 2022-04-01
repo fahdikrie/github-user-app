@@ -12,9 +12,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FollowingViewModel: ViewModel() {
-
-    private val _followingList = MutableLiveData<List<GithubUserFollow>>()
-    val followingList: LiveData<List<GithubUserFollow>> = _followingList
+    private val _followingList = MutableLiveData<List<GithubUserFollow>?>()
+    val followingList: LiveData<List<GithubUserFollow>?> = _followingList
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -37,9 +36,9 @@ class FollowingViewModel: ViewModel() {
                     val followingListResponse = response.body()
 
                     if (followingListResponse.isNullOrEmpty()) {
-                        _snackbarText.value = Event("User not found")
+                        _snackbarText.value = Event("Followings not found")
                     } else {
-                        _followingList.value = followingListResponse as List<GithubUserFollow>
+                        _followingList.value = followingListResponse
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")

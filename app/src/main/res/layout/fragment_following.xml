@@ -7,8 +7,8 @@
     tools:context=".fragments.FollowingFragment">
 
     <ProgressBar
-        android:id="@+id/pb_following"
         style="?android:attr/progressBarStyle"
+        android:id="@+id/pb_following"
         android:layout_width="20dp"
         android:layout_gravity = "center"
         android:layout_height="20dp"

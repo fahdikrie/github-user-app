@@ -5,11 +5,14 @@ import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dicoding.latihan.githubuser.R
 import com.dicoding.latihan.githubuser.adapters.UserListAdapter
 import com.dicoding.latihan.githubuser.databinding.ActivityMainBinding
 import com.dicoding.latihan.githubuser.models.responses.GithubUser
@@ -27,14 +30,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         bindViewModelToRV()
         bindSearchView()
+    }
 
-        if (applicationContext.resources.configuration.orientation ==
-            Configuration.ORIENTATION_LANDSCAPE) {
-            binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
-        } else {
-            binding.rvUsers.layoutManager = LinearLayoutManager(this)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.option_menu_user, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.favorite_users -> {
+                startActivity(Intent(
+                    this@MainActivity,
+                    FavoriteUserActivity::class.java
+                ))
+                return true
+            }
+            R.id.settings -> {
+                startActivity(Intent(
+                    this@MainActivity,
+                    SettingsActivity::class.java
+                ))
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     private fun bindSearchView() {
         binding.svSearchUser.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -57,7 +79,10 @@ class MainActivity : AppCompatActivity() {
     private fun bindViewModelToRV() {
         mainViewModel = ViewModelProvider(
             this, ViewModelProvider.NewInstanceFactory()
-        ).get(MainViewModel::class.java)
+        )[MainViewModel::class.java]
+
+        mainViewModel.getUsers("fahdii")
+        binding.svSearchUser.setQuery("fahdii", false)
 
         mainViewModel.userList.observe(this) {
             if (it.isNotEmpty()) showRecyclerList(it)
@@ -79,7 +104,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showRecyclerList(users: List<GithubUser>) {
-        binding.rvUsers.layoutManager = LinearLayoutManager(this)
+        if (applicationContext.resources.configuration.orientation ==
+            Configuration.ORIENTATION_LANDSCAPE) {
+            binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
+        } else {
+            binding.rvUsers.layoutManager = LinearLayoutManager(this)
+        }
+
         val userListAdapter = UserListAdapter(users)
         binding.rvUsers.adapter = userListAdapter
 
